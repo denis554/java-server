@@ -1,4 +1,4 @@
-package ca.uhnresearch.pughtab.tracker.server.httpd;
+package ca.uhnresearch.pughlab.tracker.server.httpd;
 
 import java.io.IOException;
 import java.io.InputStream;
