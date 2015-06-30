@@ -12,6 +12,9 @@ import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.xml.XmlConfiguration;
 
 public class EmbeddedJettyServer {
+	
+	private static final String CONFIG_FILE = "tracker.xml";
+	
 	public static void main(String[] args) throws Exception
     {
         LoggingUtil.config();
@@ -37,7 +40,7 @@ public class EmbeddedJettyServer {
         if (config == null) {
         	config = System.getProperty("user.dir");
         	configFile = new File(config);
-        	configFile = new File(configFile, "cbioportal.xml");
+        	configFile = new File(configFile, CONFIG_FILE);
         } else {
         	configFile = new File(config);
         }
@@ -50,7 +53,7 @@ public class EmbeddedJettyServer {
         if (configFile.exists()) {
         	configXMLURL = configFile.toURI().toURL();
         } else {
-        	configXMLURL = this.getClass().getResource("/cbioportal.xml");
+        	configXMLURL = this.getClass().getResource("/" + CONFIG_FILE);
         }
         
         if (configXMLURL == null) {
