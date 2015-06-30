@@ -78,14 +78,8 @@
 			<Arg type="boolean">true</Arg>
 		</Call>
 	
-		<!-- Set the resource base -->
-		<!-- TODO This contains a file path, so we'd probably best Mavenify the location and read from test classes -->
-		<New class="java.net.URI">
-			<Arg>file://${project.parent.basedir}/portal/target/portal</Arg>
-			<Call name="toASCIIString" id="baseUri" />
-		</New>
-		<Call name="setResourceBase">
-			<Arg><Ref refid="baseUri"></Ref></Arg>
+		<Call name="setWar">
+			<Arg>/Users/stuartw/git/tracker-java-restlet/target/tracker-java-restlet-0.0.1-SNAPSHOT.war</Arg>
 		</Call>
 				
 		<!-- Add the JSP initializer -->
@@ -107,47 +101,8 @@
 			</Arg>
 		</Call>
 	
-		<!--  Set the default servlet holder -->
-	    <Call name="addServlet">
-	    	<Arg>
-	    		<New class="org.eclipse.jetty.servlet.ServletHolder">
-	    			<Arg>default</Arg>
-	    			<Arg>
-	    				<Call name="forName" class="java.lang.Class">
-	     					<Arg>org.eclipse.jetty.servlet.DefaultServlet</Arg>
-	     				</Call>
-	    			</Arg>
-	    			<Call name="setInitParameter"><Arg>resourceBase</Arg><Arg><Ref refid="baseUri" /></Arg></Call>
-	    			<Call name="setInitParameter"><Arg>dirAllowed</Arg><Arg>true</Arg></Call>
-	    		</New>
-	    	</Arg>
-	    	<Arg>/</Arg>
-	    </Call> 
-	    
-	    <!-- Add the JSP servlet -->
-		<Call name="addServlet">
-		   	<Arg>
-		   		<New class="org.eclipse.jetty.servlet.ServletHolder">
-		   			<Arg>jsp</Arg>
-		   			<Arg>
-		   				<Call name="forName" class="java.lang.Class">
-		    				<Arg>org.eclipse.jetty.jsp.JettyJspServlet</Arg>
-		    			</Call>
-		   			</Arg>
-		   			<Set name="initOrder">0</Set>
-		   			<Call name="setInitParameter"><Arg>logVerbosityLevel</Arg><Arg>DEBUG</Arg></Call>
-		   			<Call name="setInitParameter"><Arg>fork</Arg><Arg>false</Arg></Call>
-		   			<Call name="setInitParameter"><Arg>xpoweredBy</Arg><Arg>false</Arg></Call>
-		   			<Call name="setInitParameter"><Arg>compilerTargetVM</Arg><Arg>1.7</Arg></Call>
-		   			<Call name="setInitParameter"><Arg>compilerSourceVM</Arg><Arg>1.7</Arg></Call>
-		   			<Call name="setInitParameter"><Arg>keepgenerated</Arg><Arg>true</Arg></Call>
-		   		</New>
-		   	</Arg>
-		   	<Arg>*.jsp</Arg>
-		</Call> 
-		
 		<Call name="forName" class="java.lang.Class">
-			<Arg>org.mskcc.cbio.server.httpd.CBioPortalJettyServer</Arg>
+			<Arg>ca.uhnresearch.pughlab.tracker.server.httpd.EmbeddedJettyServer</Arg>
 			<Call name="getClassLoader" id="serverClassloader" />
 		</Call>
 	        
@@ -164,13 +119,13 @@
 		<!-- The data source -->
 	    <New id="ds" class="org.eclipse.jetty.plus.jndi.Resource">
 	        <Arg><Ref refid="webapp"/></Arg>
-	        <Arg>jdbc/cbioportal</Arg>
+	        <Arg>jdbc/TrackerDB</Arg>
 	        <Arg>
 	            <New class="org.apache.commons.dbcp.BasicDataSource">
-	                <Set name="driverClassName">${db.test.driver}</Set>
-	                <Set name="url">${db.test.url}</Set>
-	                <Set name="username">${db.test.username}</Set>
-	                <Set name="password">${db.test.password}</Set>
+	                <Set name="driverClassName">com.mysql.jdbc.Driver</Set>
+	                <Set name="url">jdbc:mysql://localhost:3306/working_tracker?sessionVariables=sql_mode=ansi</Set>
+	                <Set name="username">tracker</Set>
+	                <Set name="password">tracker</Set>
 	            </New>
 	        </Arg>
 	    </New>
