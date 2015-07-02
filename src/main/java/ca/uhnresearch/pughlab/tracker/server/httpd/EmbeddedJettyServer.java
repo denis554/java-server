@@ -32,8 +32,6 @@ public class EmbeddedJettyServer {
 
     public void start() throws Exception
     {
-
-        System.setProperty("org.apache.jasper.compiler.disablejsr199", "false");
         
         File configFile;
         String config = System.getProperty("PORTAL_CONFIG");
