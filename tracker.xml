@@ -69,6 +69,11 @@
 			<Arg><New class="org.apache.tomcat.SimpleInstanceManager" /></Arg>
 		</Call>
 	
+        <Call name="setInitParameter">
+            <Arg>spring.profiles.active</Arg>
+            <Arg type="java.lang.String">default,form_authentication,ldap_realm</Arg>
+        </Call>
+
 		<Call name="addBean">
 			<Arg>
 				<New class="org.eclipse.jetty.annotations.ServletContainerInitializersStarter">
@@ -79,7 +84,7 @@
 		</Call>
 	
 		<Call name="setWar">
-			<Arg>/Users/stuartw/git/tracker-java-restlet/target/tracker-java-restlet-0.0.1-SNAPSHOT.war</Arg>
+			<Arg>/Users/stuartw/git/tracker-java-restlet/target/tracker-java-restlet-2.0.0-RC3.war</Arg>
 		</Call>
 				
 		<!-- Add the JSP initializer -->
