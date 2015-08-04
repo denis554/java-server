@@ -131,6 +131,10 @@
 	                <Set name="url">jdbc:mysql://localhost:3306/working_tracker?sessionVariables=sql_mode=ansi</Set>
 	                <Set name="username">tracker</Set>
 	                <Set name="password">tracker</Set>
+                    <Set name="testOnBorrow">true</Set>
+                    <Set name="validationQuery">SELECT 1</Set>
+                    <Set name="timeBetweenEvictionRunsMillis">120000</Set>
+                    <Set name="minEvictableIdleTimeMillis">120000</Set>
 	            </New>
 	        </Arg>
 	    </New>
