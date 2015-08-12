@@ -71,7 +71,7 @@
 	
         <Call name="setInitParameter">
             <Arg>spring.profiles.active</Arg>
-            <Arg type="java.lang.String">default,form_authentication,ldap_realm</Arg>
+            <Arg type="java.lang.String">default,ldap_authentication</Arg>
         </Call>
 
 		<Call name="addBean">
