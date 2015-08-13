@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ca.uhnresearch.pughlab</groupId>
 	<artifactId>tracker-server</artifactId>
-	<version>1.0.0-RC1</version>
+	<version>1.0.0-RC2</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
