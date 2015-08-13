@@ -1,6 +1,7 @@
 package ca.uhnresearch.pughlab.tracker.server.httpd;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -13,51 +14,78 @@ import org.eclipse.jetty.xml.XmlConfiguration;
 
 public class EmbeddedJettyServer {
 	
-	private static final String CONFIG_FILE = "tracker.xml";
+	/**
+	 * The default config file name
+	 */
+	private static final String DEFAULT_CONFIG_FILE = "jetty.xml";
 	
-	public static void main(String[] args) throws Exception
-    {
-        LoggingUtil.config();
-        Log.setLog(new JavaUtilLog());
-
-        EmbeddedJettyServer main = new EmbeddedJettyServer();
-
-        main.start();
-        main.waitForInterrupt();
-    }
-
+	private URL configXMLURL;
+	
     private static final Logger LOG = Logger.getLogger(EmbeddedJettyServer.class.getName());
 
     private Server server;
 
-    public void start() throws Exception
-    {
+	/**
+	 * Main entry point to the program, used to initialize an embedded
+	 * Jetty server, start it, and then wait.
+	 * 
+	 * @param args
+	 * @throws Exception
+	 */
+	public static void main(String[] args) throws Exception {
+    
+        LoggingUtil.config();
+        Log.setLog(new JavaUtilLog());
+
+        EmbeddedJettyServer main = new EmbeddedJettyServer();
+        main.initalizeConfig(args);
         
-        File configFile;
-        String config = System.getProperty("PORTAL_CONFIG");
-        if (config == null) {
-        	config = System.getProperty("user.dir");
-        	configFile = new File(config);
-        	configFile = new File(configFile, CONFIG_FILE);
-        } else {
-        	configFile = new File(config);
-        }
+        main.start();
+        main.waitForInterrupt();
+    }
+	
+	/**
+	 * Initializes the server instance with an appropriate configuration file
+	 * location. 
+	 * 
+	 * @param args
+	 * @throws MalformedURLException
+	 */
+	private void initalizeConfig(String[] args) throws MalformedURLException {
+
+		File configFile;
+		String userDir = System.getProperty("user.dir");
+		if (args.length == 1) {
+			configFile  = new File(userDir, args[0]);
+		} else {
+	        String config = System.getProperty("JETTY_CONFIG");
+	        if (config == null) {
+	        	configFile = new File(userDir, DEFAULT_CONFIG_FILE);
+	        } else {
+	        	configFile = new File(userDir, config);
+	        }
+		}
         
         // This should be a directory where a config file *might* exist. If not,
         // call through to the classpath. 
         
-        URL configXMLURL;
-        
         if (configFile.exists()) {
         	configXMLURL = configFile.toURI().toURL();
         } else {
-        	configXMLURL = this.getClass().getResource("/" + CONFIG_FILE);
+        	configXMLURL = this.getClass().getResource("/" + DEFAULT_CONFIG_FILE);
         }
         
         if (configXMLURL == null) {
         	LOG.severe("Failed to find configuration file: exiting");
         	System.exit(1);
         }
+	}
+
+	/**
+	 * Starts the server from the passed configuration URL
+	 * @throws Exception
+	 */
+    public void start() throws Exception {
         
 		LOG.info("Configuring web server from: " + configXMLURL);
 		Resource input = new FileResource(configXMLURL);
@@ -70,8 +98,7 @@ public class EmbeddedJettyServer {
 
     }
 
-    public void stop() throws Exception
-    {
+    public void stop() throws Exception {
         server.stop();
     }
 
@@ -81,8 +108,7 @@ public class EmbeddedJettyServer {
      * Interrupt Signal, or SIGINT (Unix Signal), is typically seen as a result of a kill -TERM {pid} or Ctrl+C
      * @throws InterruptedException if interrupted
      */
-    public void waitForInterrupt() throws InterruptedException
-    {
+    public void waitForInterrupt() throws InterruptedException {
         server.join();
     }
 }
