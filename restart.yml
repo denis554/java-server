@@ -1,0 +1,36 @@
+---
+
+- hosts: all
+  tasks:
+    - setup:
+        filter: '*'
+
+- hosts: all
+  tasks:
+    - name: Find current process
+      shell: ps elx | grep "[j]ava -jar tracker-server" | tr -s ' ' | cut -d ' ' -f 3
+      register: found_process
+      ignore_errors: True
+    
+    - name: Stop current process
+      shell: "kill {{found_process.stdout}}"
+      when: found_process.stdout != ""
+      
+    - name: Wait for process to finish
+      wait_for: 
+        path: "/proc/{{found_process.stdout}}/status"
+        state: absent
+      when: found_process.stdout != ""
+
+    - name: Start new process
+      shell: nohup java -jar tracker-server-1.0.0-RC1.jar > nohup.out 2>&1&
+    
+    - name: Find new process
+      shell: ps elx | grep "[j]ava -jar tracker-server" | tr -s ' ' | cut -d ' ' -f 3
+      register: started_process
+      ignore_errors: True
+
+    - name: Write new process identifier into a new file
+      copy:
+        content: "{{started_process.stdout}}"
+        dest: "{{ansible_env.HOME}}/tracker.pid"
