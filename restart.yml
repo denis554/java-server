@@ -23,7 +23,7 @@
       when: found_process.stdout != ""
 
     - name: Start new process
-      shell: nohup java -jar tracker-server-1.0.0-RC1.jar > nohup.out 2>&1&
+      shell: nohup java -jar tracker-server-1.0.0-RELEASE.jar > nohup.out 2>&1&
     
     - name: Find new process
       shell: ps elx | grep "[j]ava -jar tracker-server" | tr -s ' ' | cut -d ' ' -f 3

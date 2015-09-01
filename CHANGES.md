@@ -1,5 +1,10 @@
 ## Change log
 
+### 1.0.0-RELEASE
+
+ * First external release
+
+
 ### 1.0.0-RC2
 
  * Generalized the command line to accept a Jetty XML file
