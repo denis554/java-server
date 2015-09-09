@@ -20,14 +20,6 @@
 
 	<dependencies>
 
-		<!-- The web application -->
-		<dependency>
-			<groupId>ca.uhnresearch.pughlab</groupId>
-			<artifactId>tracker-java-restlet</artifactId>
-			<type>war</type>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-
 		<!-- Servlet APIs -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
