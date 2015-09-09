@@ -53,17 +53,21 @@ public class EmbeddedJettyServer {
 	 */
 	private void initalizeConfig(String[] args) throws MalformedURLException {
 
-		File configFile;
-		String userDir = System.getProperty("user.dir");
+		String configFileName;
 		if (args.length == 1) {
-			configFile  = new File(userDir, args[0]);
+			configFileName  = args[0];
 		} else {
 	        String config = System.getProperty("JETTY_CONFIG");
 	        if (config == null) {
-	        	configFile = new File(userDir, DEFAULT_CONFIG_FILE);
+	        	configFileName = DEFAULT_CONFIG_FILE;
 	        } else {
-	        	configFile = new File(userDir, config);
+	        	configFileName = config;
 	        }
+		}
+		File configFile = new File(configFileName);
+		if (! configFile.isAbsolute()) {
+			String userDir = System.getProperty("user.dir");
+			configFile = new File(userDir, configFileName);
 		}
         
         // This should be a directory where a config file *might* exist. If not,
