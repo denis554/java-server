@@ -1,5 +1,10 @@
 ## Change log
 
+### 1.0.1-RELEASE
+
+ * Added missing Jetty support for websockets, see #1
+
+
 ### 1.0.0-RELEASE
 
  * First external release
