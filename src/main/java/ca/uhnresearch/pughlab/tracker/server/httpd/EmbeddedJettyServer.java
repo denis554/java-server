@@ -12,7 +12,7 @@ import org.eclipse.jetty.util.log.JavaUtilLog;
 import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.xml.XmlConfiguration;
 
-public class EmbeddedJettyServer {
+public class EmbeddedJettyServer implements Runnable {
 	
 	/**
 	 * The default config file name
@@ -37,13 +37,27 @@ public class EmbeddedJettyServer {
         LoggingUtil.config();
         Log.setLog(new JavaUtilLog());
 
-        EmbeddedJettyServer main = new EmbeddedJettyServer();
-        main.initalizeConfig(args);
+        EmbeddedJettyServer main = new EmbeddedJettyServer(args);
         
-        main.start();
-        main.waitForInterrupt();
+        main.run();
     }
 	
+	EmbeddedJettyServer(String[] args) throws Exception {
+		initalizeConfig(args);
+	}
+	
+	@Override
+	public void run() {
+        try {
+            start();
+			waitForInterrupt();
+		} catch (InterruptedException e) {
+			LOG.warning("Interrupt received: exiting");
+		} catch (Exception e) {
+			LOG.warning("Error: " + e.getLocalizedMessage());
+		}
+	}
+
 	/**
 	 * Initializes the server instance with an appropriate configuration file
 	 * location. 
@@ -51,7 +65,7 @@ public class EmbeddedJettyServer {
 	 * @param args
 	 * @throws MalformedURLException
 	 */
-	private void initalizeConfig(String[] args) throws MalformedURLException {
+	private void initalizeConfig(String[] args) throws MalformedURLException, RuntimeException {
 
 		String configFileName;
 		if (args.length == 1) {
@@ -81,7 +95,7 @@ public class EmbeddedJettyServer {
         
         if (configXMLURL == null) {
         	LOG.severe("Failed to find configuration file: exiting");
-        	System.exit(1);
+        	throw new RuntimeException("Failed to find configuration file");
         }
 	}
 
