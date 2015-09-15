@@ -10,12 +10,6 @@
 		<maven.compiler.source>1.7</maven.compiler.source>
     	<maven.compiler.target>1.7</maven.compiler.target>
 		<jetty.version>9.2.9.v20150224</jetty.version>
-		
-		<db.test.serverkey>trackerSettings</db.test.serverkey>
-	  	<db.test.driver>com.mysql.jdbc.Driver</db.test.driver>
-	  	<db.test.url>jdbc:mysql://localhost:3306/working_tracker</db.test.url>
-	  	<db.test.username>tracker</db.test.username>
-	  	<db.test.password>tracker</db.test.password>
 	</properties>
 
 	<dependencies>
@@ -95,8 +89,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.0</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         
@@ -134,15 +128,6 @@
 				</executions>
 			</plugin>
 		</plugins>
-
-		<testResources>
-
-			<!-- Template the test files using Maven properties -->
-			<testResource>
-				<directory>src/test/resources</directory>
-				<filtering>true</filtering>
-			</testResource>
-		</testResources>
 	</build>
 	
 	<profiles>
