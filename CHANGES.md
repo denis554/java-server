@@ -1,5 +1,16 @@
 ## Change log
 
+
+### 1.0.3
+
+ * Transitioned to Maven Central deployment
+
+
+### 1.0.2-RELEASE [Not released]
+
+ * Transitioning to Maven Central deployment
+
+
 ### 1.0.1-RELEASE
 
  * Added missing Jetty support for websockets, see #1
