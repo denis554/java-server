@@ -2,8 +2,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ca.uhnresearch.pughlab</groupId>
-	<artifactId>tracker-server</artifactId>
-	<version>1.0.1-RELEASE</version>
+	<artifactId>java-server</artifactId>
+	<version>1.0.2-SNAPSHOT</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -11,6 +11,25 @@
     	<maven.compiler.target>1.7</maven.compiler.target>
 		<jetty.version>9.2.9.v20150224</jetty.version>
 	</properties>
+
+    <licenses>
+        <license>
+            <name>BSD 3-Clause License</name>
+            <url>http://opensource.org/licenses/BSD-3-Clause</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/pughlab/java-server/issues</url>
+    </issueManagement>
+
+    <scm>
+        <url>https://github.com/pughlab/java-server</url>
+        <connection>scm:git:git@github.com:pughlab/java-server.git</connection>
+        <developerConnection>scm:git:git@github.com:pughlab/java-server.git</developerConnection>
+    </scm>
 
 	<dependencies>
 
@@ -89,9 +108,15 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.0</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                 </configuration>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
             </plugin>
         
 			<plugin>
