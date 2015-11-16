@@ -34,6 +34,22 @@
         <developerConnection>scm:git:git@github.com:pughlab/java-server.git</developerConnection>
     </scm>
     
+    <developers>
+        <developer>
+            <id>stuartw</id>
+            <name>Stuart Watt</name>
+            <email>stuart@morungos.com</email>
+            <organization>University Health Network</organization>
+            <organizationUrl>http://uhnresearch.ca</organizationUrl>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>America/Toronto</timezone>
+        </developer>
+    </developers>
+    
+    
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
