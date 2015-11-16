@@ -3,6 +3,10 @@
 	<groupId>ca.uhnresearch.pughlab</groupId>
 	<artifactId>java-server</artifactId>
 	<version>1.0.3-SNAPSHOT</version>
+    
+    <name>Generic Server Container</name>
+    <description>A generic server container for the tracker, cbioPortal, and other Java-based web applications</description>
+    <url>https://github.com/pughlab/java-server</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
