@@ -33,7 +33,7 @@
         <connection>scm:git:git@github.com:pughlab/java-server.git</connection>
         <developerConnection>scm:git:git@github.com:pughlab/java-server.git</developerConnection>
       <tag>HEAD</tag>
-  </scm>
+    </scm>
     
     <developers>
         <developer>
