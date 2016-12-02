@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ca.uhnresearch.pughlab</groupId>
     <artifactId>java-server</artifactId>
-    <version>1.0.4-SNAPSHOT</version>
+    <version>1.0.4</version>
 
     <name>Generic Server Container</name>
     <description>A generic server container for the tracker, cbioPortal, and other Java-based web applications</description>
@@ -32,7 +32,7 @@
         <url>https://github.com/pughlab/java-server</url>
         <connection>scm:git:git@github.com:pughlab/java-server.git</connection>
         <developerConnection>scm:git:git@github.com:pughlab/java-server.git</developerConnection>
-      <tag>HEAD</tag>
+      <tag>java-server-1.0.4</tag>
     </scm>
 
     <developers>
