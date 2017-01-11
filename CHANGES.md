@@ -1,6 +1,16 @@
 ## Change log
 
 
+### 1.0.5
+
+ * Added logback to centralize logging better
+
+
+### 1.0.4
+
+ * Adding a rewrite component
+
+
 ### 1.0.3
 
  * Transitioned to Maven Central deployment
