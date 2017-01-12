@@ -13,7 +13,7 @@
 //
 // You may elect to redistribute this code under either of these licenses.
 // ========================================================================
-package org.eclipse.jetty.webapp.logging;
+package ca.uhnresearch.pughlab.tracker.server.httpd;
 
 import java.io.IOException;
 import java.security.Principal;
