@@ -13,103 +13,103 @@ import org.eclipse.jetty.util.log.Log;
 import org.eclipse.jetty.xml.XmlConfiguration;
 
 public class EmbeddedJettyServer implements Runnable {
-	
-	/**
-	 * The default config file name
-	 */
-	private static final String DEFAULT_CONFIG_FILE = "jetty.xml";
-	
-	private URL configXMLURL;
-	
+    
+    /**
+     * The default config file name
+     */
+    private static final String DEFAULT_CONFIG_FILE = "jetty.xml";
+
+    private URL configXMLURL;
+
     private static final Logger LOG = Logger.getLogger(EmbeddedJettyServer.class.getName());
 
     private Server server;
 
-	/**
-	 * Main entry point to the program, used to initialize an embedded
-	 * Jetty server, start it, and then wait.
-	 * 
-	 * @param args
-	 * @throws Exception
-	 */
-	public static void main(String[] args) throws Exception {
-    
+    /**
+     * Main entry point to the program, used to initialize an embedded
+     * Jetty server, start it, and then wait.
+     *
+     * @param args
+     * @throws Exception
+     */
+    public static void main(String[] args) throws Exception {
+
         LoggingUtil.config();
         Log.setLog(new JavaUtilLog());
 
         EmbeddedJettyServer main = new EmbeddedJettyServer(args);
-        
+
         main.run();
     }
-	
-	EmbeddedJettyServer(String[] args) throws Exception {
-		initalizeConfig(args);
-	}
-	
-	@Override
-	public void run() {
+
+    EmbeddedJettyServer(String[] args) throws Exception {
+        initalizeConfig(args);
+    }
+
+    @Override
+    public void run() {
         try {
             start();
-			waitForInterrupt();
-		} catch (InterruptedException e) {
-			LOG.warning("Interrupt received: exiting");
-		} catch (Exception e) {
-			LOG.warning("Error: " + e.getLocalizedMessage());
-		}
-	}
+            waitForInterrupt();
+        } catch (InterruptedException e) {
+            LOG.warning("Interrupt received: exiting");
+        } catch (Exception e) {
+            LOG.warning("Error: " + e.getLocalizedMessage());
+        }
+    }
 
-	/**
-	 * Initializes the server instance with an appropriate configuration file
-	 * location. 
-	 * 
-	 * @param args
-	 * @throws MalformedURLException
-	 */
-	private void initalizeConfig(String[] args) throws MalformedURLException, RuntimeException {
+    /**
+     * Initializes the server instance with an appropriate configuration file
+     * location.
+     *
+     * @param args
+     * @throws MalformedURLException
+     */
+    private void initalizeConfig(String[] args) throws MalformedURLException, RuntimeException {
 
-		String configFileName;
-		if (args.length == 1) {
-			configFileName  = args[0];
-		} else {
-	        String config = System.getProperty("JETTY_CONFIG");
-	        if (config == null) {
-	        	configFileName = DEFAULT_CONFIG_FILE;
-	        } else {
-	        	configFileName = config;
-	        }
-		}
-		File configFile = new File(configFileName);
-		if (! configFile.isAbsolute()) {
-			String userDir = System.getProperty("user.dir");
-			configFile = new File(userDir, configFileName);
-		}
-        
-        // This should be a directory where a config file *might* exist. If not,
-        // call through to the classpath. 
-        
-        if (configFile.exists()) {
-        	configXMLURL = configFile.toURI().toURL();
+        String configFileName;
+        if (args.length == 1) {
+            configFileName  = args[0];
         } else {
-        	configXMLURL = this.getClass().getResource("/" + DEFAULT_CONFIG_FILE);
+            String config = System.getProperty("JETTY_CONFIG");
+            if (config == null) {
+                configFileName = DEFAULT_CONFIG_FILE;
+            } else {
+                configFileName = config;
+            }
         }
-        
-        if (configXMLURL == null) {
-        	LOG.severe("Failed to find configuration file: exiting");
-        	throw new RuntimeException("Failed to find configuration file");
+        File configFile = new File(configFileName);
+        if (! configFile.isAbsolute()) {
+            String userDir = System.getProperty("user.dir");
+            configFile = new File(userDir, configFileName);
         }
-	}
 
-	/**
-	 * Starts the server from the passed configuration URL
-	 * @throws Exception
-	 */
+        // This should be a directory where a config file *might* exist. If not,
+        // call through to the classpath.
+
+        if (configFile.exists()) {
+            configXMLURL = configFile.toURI().toURL();
+        } else {
+            configXMLURL = this.getClass().getResource("/" + DEFAULT_CONFIG_FILE);
+        }
+
+        if (configXMLURL == null) {
+            LOG.severe("Failed to find configuration file: exiting");
+            throw new RuntimeException("Failed to find configuration file");
+        }
+    }
+
+    /**
+     * Starts the server from the passed configuration URL
+     * @throws Exception
+     */
     public void start() throws Exception {
-        
-		LOG.info("Configuring web server from: " + configXMLURL);
-		Resource input = new FileResource(configXMLURL);
-	    XmlConfiguration configuration = new XmlConfiguration(input.getInputStream());
-	    server = (Server)configuration.configure();
-	    input.close();
+
+        LOG.info("Configuring web server from: " + configXMLURL);
+        Resource input = new FileResource(configXMLURL);
+        XmlConfiguration configuration = new XmlConfiguration(input.getInputStream());
+        server = (Server)configuration.configure();
+        input.close();
 
         // Start Server
         server.start();

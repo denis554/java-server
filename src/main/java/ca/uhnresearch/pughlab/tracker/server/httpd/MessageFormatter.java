@@ -5,9 +5,9 @@ import java.util.logging.LogRecord;
 
 public class MessageFormatter extends Formatter {
 
-	@Override
-	public String format(LogRecord record) {
-		return record.getMessage().concat("\n");
-	}
+    @Override
+    public String format(LogRecord record) {
+        return record.getMessage().concat("\n");
+    }
 
 }
